@@ -1,0 +1,52 @@
+.row-actions a {
+    text-decoration: none !important;
+}
+
+.row-actions .edit{
+    color: #3858e9;
+    background-color: transparent; 
+    border: 1px solid #3858e9; 
+    border-radius: 1px; 
+    text-transform: uppercase;
+    margin-right: 2px; 
+}
+
+.row-actions .inline{
+    color: #3858e9; 
+    background-color: transparent;
+    border: 1px solid #3858e9; 
+    border-radius: 1px; 
+    text-transform: uppercase;
+    margin-right: 2px; 
+
+}
+
+.row-actions .trash{
+    color: #b32d2e; 
+    background-color: transparent; 
+    border: 1px solid #b32d2e; 
+    border-radius: 1px; 
+    text-transform: uppercase;
+    margin-right: 2px; 
+}
+
+.row-actions .view{
+    color: #3858e9;
+    background-color: transparent; 
+    border: 1px solid #3858e9; 
+    border-radius: 1px; 
+    text-transform: uppercase;
+    margin-right: 1px; 
+}
+
+.column-download a{
+    color: #3858e9 !important;
+    background-color: transparent !important;
+    border: 3px solid #3858e9; 
+    border-radius: 3px; 
+    text-transform: uppercase;
+}
+
+.doc-id span{
+    color:#3858e9 !important;
+}

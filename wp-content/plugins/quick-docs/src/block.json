@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "kumar/quick-docs",
+	"version": "0.1.0",
+	"title": "Quick Docs",
+	"category": "widgets",
+	"icon": "dashicons dashicons-media-document",
+	"description": "Generate documentation with previously created blocks and paragraphs.",
+	"attributes": {
+		"allContents": {
+			"type": "array",
+			"default": []
+		},
+		"selectedParagraphs": {
+			"type":"string",
+			"html": "p"
+		},
+		"searchText": {
+			"type": "string"
+		}
+	},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "quick-docs",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}

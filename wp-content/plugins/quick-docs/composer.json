@@ -1,0 +1,30 @@
+{
+	"name": "ninthujan/quick-docs",
+	"description": "Class doc Features WordPress Plugin",
+	"license": "GPL-3.0+",
+	"version": "1.0.0",
+	"keywords": [
+		"wordpress",
+		"plugin"
+	],
+	"require": {
+		"php": ">=5.4.0",
+		"tecnickcom/tcpdf": "^6.6"
+	},
+	"homepage": "https://ninthujan.com",
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^2.3",
+		"phpcompatibility/phpcompatibility-wp": "^2.1"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+    "authors": [
+        {
+            "name": "Ninthujan",
+            "email": "ninthija@gmail.com"
+        }
+    ]
+}

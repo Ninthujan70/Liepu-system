@@ -1,0 +1,220 @@
+/*
+Theme Name: TwentyTwentyThree Child
+Template: twentytwentythree
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Urbanist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+*
+{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fira Code', monospace; 
+  font-family: 'Urbanist', sans-serif;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+body{
+  background:url(http://document-management-system.test/wp-content/uploads/2023/04/579986-room-office.jpg) !important;
+  max-width: 100%;
+  max-height: 100%;
+  overflow:hidden
+}
+
+main{
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+footer{
+  background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
+  padding: 20px 0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.css-10klw3m{
+  height: auto !important;
+}
+
+.dahsboard{
+  min-height: calc(100vh - 100px);
+  text-align: center;
+} 
+.main-title{
+  color: #fff;
+  font-weight: 900;
+  background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
+  padding: 10px;
+}
+.dash-item{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  list-style: none;
+  margin-top: 5rem;
+  gap: 3rem;
+}
+.dash-item li{
+  padding: 2rem;
+  background: rgb(74, 13, 13); 
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  border-radius: 8px;
+  color: #fff;
+ 
+}
+
+.dash-item li:hover{
+  padding: 2rem;
+  background:  rgb(221, 175, 8) ; 
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
+  border-radius: 8px;
+  color: #fff;
+ 
+}
+
+.dash-item li h2{
+  font-size: 80px;
+  font-weight: 900;
+}
+.dash-item li h3{
+  font-size: 30px !important;
+  font-weight: 400 !important;
+}
+
+.goto-admin{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 40px;
+  color: #fff;
+  background-color: rgb(74, 13, 13);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.5s ease-in-out;
+  margin-top: 30px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+.goto-admin:hover{
+  background-color:rgb(221, 175, 8);
+}
+
+/*login customization */
+body.login div#login h1 a {
+  background-image: url(http://document-management-system.test/wp-content/uploads/2023/04/liepu_logo.png);
+  height: 100px;
+  width: 126px;
+  background-size: 100px 100px;
+  background-repeat: no-repeat;
+  padding-bottom: 10px;
+}
+
+body.login div#login form#loginform {
+  background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
+  border-radius: 5px;
+  padding: 20px;
+  font-weight: bold;
+}
+
+body.login div#login form#loginform p {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+
+body.login div#login form#loginform p label,
+body.login div#login form#loginform .user-pass-wrap label {
+  color: #ffffff !important;
+}
+
+body.login div#login form#loginform input[type="text"], 
+body.login div#login form#loginform input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: inset 0 0 3px rgba(0,0,0,0.2);
+}
+
+
+body.login div#login form#loginform input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+body.login div#login form#loginform p.forgetmenot {
+  margin-bottom: 20px;
+}
+
+body.login div#login form#loginform p.submit {
+  margin-bottom: 0;
+}
+
+body.login div#login form#loginform p.submit input[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color:  rgb(74, 13, 13);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2em;
+  font-weight: bold;
+  box-shadow: 0 3px 0  rgb(74, 13, 13) ;
+  transition: all 0.2s ease-in-out;
+}
+
+body.login div#login form#loginform p.submit input[type="submit"]:hover {
+  background-color: #005c09;
+  box-shadow: 0 3px 0 #005c09;
+  transform: translateY(-2px);
+}
+
+body.login #nav a,
+body.login #backtoblog a {
+  color: #fff;
+  text-decoration: none;
+}
+body.login #nav a:hover,
+body.login #backtoblog a:hover {
+  color:  rgb(74, 13, 13) ;
+  background-color: #fff;
+}
+body.login #nav a:focus,
+body.login #backtoblog a:focus {
+  color:  rgb(74, 13, 13) ;
+}
+body.login #nav a:active,
+body.login #backtoblog a:active {
+  color:  rgb(74, 13, 13) ;
+}
+body.login #nav a {
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 20px;
+}
+body.login #backtoblog {
+  font-size: 18px;
+  margin-top: 20px;
+  font-weight: 600;
+}
+
+.login label {
+  color: #0c0c0c;
+  font-size: 16px;
+}
+
