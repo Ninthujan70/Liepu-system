@@ -72,3 +72,21 @@ add_shortcode('quick-docs', 'quick_docs_generate_shortcode');
 
 require 'post-type-changes.php';
 require 'download-pdf.php';
+
+
+function content_grabber_pro_filter_blocks($blocks, $type)
+{
+	$matches = [];
+	foreach ($blocks as $block) {
+		if ($block['blockName'] === $type)
+			$matches[] = $block;
+		if (count($block['innerBlocks'])) {
+			$matches = array_merge(
+				$matches,
+				content_grabber_pro_filter_blocks($block['innerBlocks'], $type)
+			);
+		}
+	}
+
+	return $matches;
+}

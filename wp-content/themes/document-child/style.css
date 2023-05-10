@@ -16,20 +16,23 @@ Template: twentytwentythree
   max-height: 100%;
 }
 
-body{
-  background:url(http://document-management-system.test/wp-content/uploads/2023/04/579986-room-office.jpg) !important;
-  max-width: 100%;
-  max-height: 100%;
-  overflow:hidden
+body .wp-site-blocks{
+background-color: aliceblue;
 }
 
+body.login {
+  background-image: url(http://document-management-system.test/wp-content/uploads/2023/04/579986-room-office.jpg);
+  background-size: cover;
+  }
+  
+
 main{
-  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
 }
+
 footer{
   background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
   padding: 20px 0;
@@ -38,26 +41,40 @@ footer{
   justify-content: center;
   align-items: center;
 }
+
+#wpadminbar #wp-admin-bar-top-secondary , #wp-admin-bar-site-name{
+  display: none;
+}
+
+
 .css-10klw3m{
   height: auto !important;
 }
 
 .dahsboard{
   min-height: calc(100vh - 100px);
+  background:url(http://document-management-system.test/wp-content/uploads/2023/04/579986-room-office.jpg);
   text-align: center;
 } 
+
 .main-title{
   color: #fff;
   font-weight: 900;
   background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
   padding: 10px;
+  max-width: 1200px;
+  margin: auto;
 }
+
 .dash-item{
   display: grid;
   grid-template-columns: repeat(3,1fr);
   list-style: none;
   margin-top: 5rem;
   gap: 3rem;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 50px;
 }
 .dash-item li{
   padding: 2rem;
@@ -69,6 +86,7 @@ footer{
   align-items: center;
   border-radius: 8px;
   color: #fff;
+ 
  
 }
 
@@ -122,27 +140,27 @@ body.login div#login h1 a {
   padding-bottom: 10px;
 }
 
-body.login div#login form#loginform {
+.login div#login form#loginform {
   background: radial-gradient(circle, rgb(74, 13, 13) 0%, rgb(239, 196, 40) 100%);
   border-radius: 5px;
   padding: 20px;
   font-weight: bold;
 }
 
-body.login div#login form#loginform p {
+.login div#login form#loginform p {
   margin: 0;
   padding: 0;
   font-weight: bold;
 }
 
 
-body.login div#login form#loginform p label,
-body.login div#login form#loginform .user-pass-wrap label {
+.login div#login form#loginform p label,
+.login div#login form#loginform .user-pass-wrap label {
   color: #ffffff !important;
 }
 
-body.login div#login form#loginform input[type="text"], 
-body.login div#login form#loginform input[type="password"] {
+.login div#login form#loginform input[type="text"], 
+.login div#login form#loginform input[type="password"] {
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
@@ -152,19 +170,19 @@ body.login div#login form#loginform input[type="password"] {
 }
 
 
-body.login div#login form#loginform input[type="checkbox"] {
+.login div#login form#loginform input[type="checkbox"] {
   margin-right: 10px;
 }
 
-body.login div#login form#loginform p.forgetmenot {
+.login div#login form#loginform p.forgetmenot {
   margin-bottom: 20px;
 }
 
-body.login div#login form#loginform p.submit {
+.login div#login form#loginform p.submit {
   margin-bottom: 0;
 }
 
-body.login div#login form#loginform p.submit input[type="submit"] {
+.login div#login form#loginform p.submit input[type="submit"] {
   display: block;
   width: 100%;
   padding: 10px;
@@ -178,36 +196,36 @@ body.login div#login form#loginform p.submit input[type="submit"] {
   transition: all 0.2s ease-in-out;
 }
 
-body.login div#login form#loginform p.submit input[type="submit"]:hover {
+.login div#login form#loginform p.submit input[type="submit"]:hover {
   background-color: #005c09;
   box-shadow: 0 3px 0 #005c09;
   transform: translateY(-2px);
 }
 
-body.login #nav a,
-body.login #backtoblog a {
+.login #nav a,
+.login #backtoblog a {
   color: #fff;
   text-decoration: none;
 }
-body.login #nav a:hover,
-body.login #backtoblog a:hover {
+.login #nav a:hover,
+.login #backtoblog a:hover {
   color:  rgb(74, 13, 13) ;
   background-color: #fff;
 }
-body.login #nav a:focus,
-body.login #backtoblog a:focus {
+.login #nav a:focus,
+.login #backtoblog a:focus {
   color:  rgb(74, 13, 13) ;
 }
-body.login #nav a:active,
-body.login #backtoblog a:active {
+.login #nav a:active,
+.login #backtoblog a:active {
   color:  rgb(74, 13, 13) ;
 }
-body.login #nav a {
+.login #nav a {
   font-size: 18px;
   font-weight: 600;
   margin-top: 20px;
 }
-body.login #backtoblog {
+.login #backtoblog {
   font-size: 18px;
   margin-top: 20px;
   font-weight: 600;
@@ -217,4 +235,5 @@ body.login #backtoblog {
   color: #0c0c0c;
   font-size: 16px;
 }
+
 

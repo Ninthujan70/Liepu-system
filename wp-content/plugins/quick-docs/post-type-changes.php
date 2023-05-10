@@ -1,6 +1,7 @@
 <?php
 // create documentation post types
-function custom_post_type() {
+function custom_post_type()
+{
 	$labels = array(
 		'name'               => 'Documents',
 		'singular_name'      => 'Document',
@@ -22,26 +23,27 @@ function custom_post_type() {
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'document' ),
+		'rewrite'            => array('slug' => 'document'),
 		'capability_type'    => 'post',
 		'has_archive'        => true,
 		'hierarchical'       => false,
 		'menu_position'      => 0,
 		'menu_icon'          => 'dashicons-media-document',
 		'show_in_rest'       => true,
-		'supports'           => array( 'title', 'editor', 'author', 'thumbnail' ),
+		'supports'           => array('title', 'editor', 'author', 'thumbnail'),
 	);
-	register_post_type( 'document', $args );
+	register_post_type('document', $args);
 }
 
-add_action( 'init', 'custom_post_type' );
+add_action('init', 'custom_post_type');
 
-function get_current_user_data() {
+function get_current_user_data()
+{
 	include_once ABSPATH . 'wp-includes/pluggable.php';
 	$current_user = wp_get_current_user();
 	$user_roles   = $current_user->roles;
-	$user_role    = array_shift( $user_roles );
-	$role_name    = get_role( $user_role )->name;
+	$user_role    = array_shift($user_roles);
+	$role_name    = get_role($user_role)->name;
 	return array(
 		'name'      => $role_name,
 		'roles'     => $user_roles,
@@ -50,14 +52,14 @@ function get_current_user_data() {
 }
 
 
-
 // add custom post type column
-function custom_posts_columns( $columns ) {
+function custom_posts_columns($columns)
+{
 	$columns['doc-id']   = 'Document ID';
-	if ( is_user_logged_in() ) {
+	if (is_user_logged_in()) {
 		// User is logged in, grant permission
 		$data = get_current_user_data();
-		if ( $data['name'] == 'administrator' || $data['name'] == 'editor' ) {
+		if ($data['name'] == 'administrator' || $data['name'] == 'editor') {
 			$columns['download'] = 'Download';
 			$columns['total-download'] = 'Total Downloads';
 		}
@@ -66,43 +68,51 @@ function custom_posts_columns( $columns ) {
 	return $columns;
 }
 
-add_filter( 'manage_document_posts_columns', 'custom_posts_columns' );
+add_filter('manage_document_posts_columns', 'custom_posts_columns');
 
 // append contents for download and post id columns
-function custom_posts_column_content( $column_name, $post_id ) {
-	if ( $column_name == 'doc-id' ) {
+function custom_posts_column_content($column_name, $post_id)
+{
+	if ($column_name == 'doc-id') {
 		$styles = 'style="font-size:25px;display: grid;justify-content: start;align-items: center;margin-top: 14px;color: green;"';
 		echo '<span ' . $styles . '>' . $post_id . '</span>';
 	}
-	if ( $column_name == 'download' ) {
-		$styles = 'style="font-size:15px;display: inline-flex;justify-content: start;align-items: center;margin-top: 5px;background: green;color: #ffff;padding: 8px 15px;border-radius: 4px;"';
+	if ($column_name == 'download') {
+		$styles = 'style="font-size:15px;display: inline-flex;justify-content: start;align-items: center;margin-top: 5px;color: #ffff;padding: 8px 15px;border-radius: 4px;"';
 		echo '<a href="#' . $post_id . '" onClick="downloadPdf(' . $post_id . ');" ' . $styles . '>Download</a>';
 	}
-	if ( $column_name == 'total-download' ) {
-		$downloads 	=	get_post_meta( $post_id, 'pdf_download_count', true );
-		echo '<span>('.$downloads.')</span>';
+	if ($column_name == 'total-download') {
+		$downloads 	=	get_post_meta($post_id, 'pdf_download_count', true);
+		echo '<span>(' . $downloads . ')</span>';
 	}
-	if ( $column_name == 'role' ) {
+	if ($column_name == 'role') {
 
 		echo '<p>' . get_current_user_data()['name'] . '</p>';
 	}
+	if ($column_name == 'title') {
+		$post_type = get_post_type($post_id);
+		if ($post_type === 'document') {
+			$attachment_id = get_post_meta($post_id, 'custom_uploads', true);
+			$attachment_title = get_the_title($attachment_id);
+			if (!empty($attachment_title)) {
+				$attachment_url = wp_get_attachment_url($attachment_id);
+				$file_extension = pathinfo($attachment_url, PATHINFO_EXTENSION);
+				if ($file_extension === 'pdf') {
+					echo '<i class="fa fa-file-pdf-o"></i> ' . esc_html($attachment_title);
+				} elseif ($file_extension === 'doc' || $file_extension === 'docx') {
+					echo '<i class="fa fa-file-word-o"></i> ' . esc_html($attachment_title);
+				} else {
+					echo esc_html($attachment_title);
+				}
+			} else {
+				$post_title = get_the_title($post_id);
+				echo esc_html($post_title);
+			}
+		} else {
+			$post_title = get_the_title($post_id);
+			echo esc_html($post_title);
+		}
+	}
 }
 
-add_action( 'manage_document_posts_custom_column', 'custom_posts_column_content', 10, 2 );
-
-// Move the "Author" column to the end of the list table
-function move_author_column( $columns ) {
-	$author = $columns['author'];
-	unset( $columns['author'] );
-	$columns['author'] = $author;
-	return $columns;
-}
-
-add_filter( 'manage_document_posts_columns', 'move_author_column' );
-
-// include custom api call changes
-require 'custom-endpoint.php';
-
-
-
-
+add_action('manage_document_posts_custom_column', 'custom_posts_column_content', 10, 2);
