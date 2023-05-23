@@ -9,7 +9,10 @@
 	],
 	"require": {
 		"php": ">=5.4.0",
-		"tecnickcom/tcpdf": "^6.6"
+		"tecnickcom/tcpdf": "^6.6",
+		"smalot/pdfparser": "^2.5",
+		"spatie/pdf-to-text": "^1.52",
+		"phpoffice/phpword": "^1.0"
 	},
 	"homepage": "https://ninthujan.com",
 	"require-dev": {
@@ -24,7 +27,7 @@
     "authors": [
         {
             "name": "Ninthujan",
-            "email": "ninthija@gmail.com"
+            "email": "ninthujan@gmail.com"
         }
     ]
 }

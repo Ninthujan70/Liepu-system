@@ -12,6 +12,10 @@
 			"type": "array",
 			"default": []
 		},
+		"allPages": {
+			"type": "array",
+			"default": []
+		},
 		"selectedParagraphs": {
 			"type":"string",
 			"html": "p"

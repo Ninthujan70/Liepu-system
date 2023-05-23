@@ -35,7 +35,31 @@ function custom_post_type()
 	register_post_type('document', $args);
 }
 
+
+function add_custom_submenu_page()
+{
+	if (check_user_permission()) {
+		add_submenu_page(
+			'edit.php?post_type=document',
+			'Upload Documents',
+			'Upload Documents',
+			'manage_options',
+			'upload-documents',
+			'upload_documents_callback'
+		);
+	}
+}
+
+
+function upload_documents_callback()
+{
+	// Callback function for the "Upload Documents" submenu page
+	// Add your HTML and form handling logic here
+	require_once 'inc/upload-admin-view.php';
+}
+
 add_action('init', 'custom_post_type');
+add_action('admin_menu', 'add_custom_submenu_page');
 
 function get_current_user_data()
 {
@@ -50,6 +74,7 @@ function get_current_user_data()
 		'is_logged' => is_user_logged_in(),
 	);
 }
+
 
 
 // add custom post type column
@@ -74,7 +99,7 @@ add_filter('manage_document_posts_columns', 'custom_posts_columns');
 function custom_posts_column_content($column_name, $post_id)
 {
 	if ($column_name == 'doc-id') {
-		$styles = 'style="font-size:25px;display: grid;justify-content: start;align-items: center;margin-top: 14px;color: green;"';
+		$styles = 'style="font-size:25px;display: grid;justify-content: start;align-items: center;margin-top: 14px;"';
 		echo '<span ' . $styles . '>' . $post_id . '</span>';
 	}
 	if ($column_name == 'download') {
@@ -89,30 +114,20 @@ function custom_posts_column_content($column_name, $post_id)
 
 		echo '<p>' . get_current_user_data()['name'] . '</p>';
 	}
-	if ($column_name == 'title') {
-		$post_type = get_post_type($post_id);
-		if ($post_type === 'document') {
-			$attachment_id = get_post_meta($post_id, 'custom_uploads', true);
-			$attachment_title = get_the_title($attachment_id);
-			if (!empty($attachment_title)) {
-				$attachment_url = wp_get_attachment_url($attachment_id);
-				$file_extension = pathinfo($attachment_url, PATHINFO_EXTENSION);
-				if ($file_extension === 'pdf') {
-					echo '<i class="fa fa-file-pdf-o"></i> ' . esc_html($attachment_title);
-				} elseif ($file_extension === 'doc' || $file_extension === 'docx') {
-					echo '<i class="fa fa-file-word-o"></i> ' . esc_html($attachment_title);
-				} else {
-					echo esc_html($attachment_title);
-				}
-			} else {
-				$post_title = get_the_title($post_id);
-				echo esc_html($post_title);
-			}
-		} else {
-			$post_title = get_the_title($post_id);
-			echo esc_html($post_title);
-		}
-	}
 }
 
 add_action('manage_document_posts_custom_column', 'custom_posts_column_content', 10, 2);
+
+// Move the "Author" column to the end of the list table
+function move_author_column($columns)
+{
+	$author = $columns['author'];
+	unset($columns['author']);
+	$columns['author'] = $author;
+	return $columns;
+}
+
+add_filter('manage_document_posts_columns', 'move_author_column');
+
+// include custom api call changes
+require 'custom-endpoint.php';

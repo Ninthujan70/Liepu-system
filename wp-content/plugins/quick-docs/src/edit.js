@@ -6,32 +6,45 @@ const { Button, Card, CardHeader, CardBody } = wp.components;
 
 import "./editor.scss";
 
-export default function Edit({ attributes: { searchText, allContents }, setAttributes, clientId }) {
+export default function Edit({ attributes: { searchText, allContents, allPages }, setAttributes, clientId }) {
 	const dispatch = useDispatch();
 
 	const getApiPostItem = (term) => {
 		// Make the request to the WordPress REST API to retrieve the page content
-		wp.apiFetch({ path: `/quick-doc/api/documents/${term}` })
+		wp.apiFetch({
+			path: `/quick-doc/api/documents/`,
+			method: "POST",
+			data: {
+				term: term, // The page slug
+			},
+		})
 			.then((data) => {
-				// Extract the content of the first (and only) page in the response
-				const htmlString = data ? data.content_render : "";
+				console.log(data, "data");
+				if (data) {
+					let paragraphStrings = [];
 
-				const parser = new DOMParser();
-				const doc = parser.parseFromString(htmlString, "text/html");
+					data.forEach((page) => {
+						// Extract the content of the first (and only) page in the response
+						const htmlString = page ? page.content_render : "";
 
-				// Select all paragraph elements from the Document object
-				const paragraphs = doc.querySelectorAll("p");
+						const parser = new DOMParser();
+						const doc = parser.parseFromString(htmlString, "text/html");
 
-				// Convert the paragraph elements into an array of strings
-				const paragraphStrings = Array.from(paragraphs).map((p) => p.textContent.trim());
+						// Select all paragraph elements from the Document object
+						const paragraphs = doc.querySelectorAll("p");
 
-				setAttributes({ allContents: paragraphStrings });
-				console.log(paragraphStrings);
-				// setPageContent(content);
+						// Convert the paragraph elements into an array of strings
+						const paragraphArray = Array.from(paragraphs).map((p) => [p.textContent.trim()]);
+
+						// Concatenate the paragraph strings into the main array
+						paragraphStrings = paragraphStrings.concat({"title":page.title, "id":page.id, paragraphArray});
+					});
+					setAttributes({ allPages: paragraphStrings });
+				}
 			})
 			.catch((error) => {
 				// console.log(error);
-				setAttributes({ allContents: [] });
+				setAttributes({ allPages: [] });
 			});
 	};
 
@@ -40,6 +53,11 @@ export default function Edit({ attributes: { searchText, allContents }, setAttri
 
 		const currentBlockIndex = wp.data.select("core/block-editor").getBlockIndex(clientId);
 		wp.data.dispatch("core/block-editor").insertBlock(newBlock, currentBlockIndex);
+	};
+
+	const selectPageFromList = (item) => {
+		 setAttributes({allContents: item.paragraphArray});
+		 setAttributes({ allPages: [] });
 	};
 
 	const shortContent = (cnt) => {
@@ -56,6 +74,7 @@ export default function Edit({ attributes: { searchText, allContents }, setAttri
 	useEffect(() => {
 		if (searchText) {
 			getApiPostItem(searchText);
+			setAttributes({ allContents: [] });
 		}
 	}, [searchText]);
 
@@ -79,22 +98,35 @@ export default function Edit({ attributes: { searchText, allContents }, setAttri
 							}}
 						/>
 						<ul className="all-paragraphs">
+							{allPages.map((item, i) => (
+								<li key={i} className="custom-li">
+									<Card onClick={() => selectPageFromList(item)}>
+										<CardHeader>
+											<p>Document Name: {item.title}</p>
+											<p>
+												Paragraph Count: <strong>{item.paragraphArray.length}</strong>
+											</p>
+										</CardHeader>
+									</Card>
+								</li>
+							))}
+
 							{allContents.map((item, i) => (
 								<li key={i} className="custom-li">
 									<Card>
 										<CardHeader>
 											<p>Paragraph - {i + 1}</p>
-											<Button variant="secondary" onClick={() => onCLickItem(item)}>
+											<Button variant="secondary" onClick={() => onCLickItem(item[0])}>
 												{__("Add to Page", "")}
 											</Button>
 										</CardHeader>
 										<CardBody>
-											<p>{shortContent(item)}</p>
+											<p>{shortContent(item[0])}</p>
 										</CardBody>
 									</Card>
 								</li>
 							))}
-							{allContents.length == 0 ? <li className="no-content">No any contents Found under the Page ID: {searchText}</li> : ""}
+							{allPages.length == 0 && allContents.length == 0 ? <li className="no-content">No any Pages Found under the Search: {searchText}</li> : ""}
 						</ul>
 					</div>
 				</div>
